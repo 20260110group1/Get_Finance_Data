@@ -1,0 +1,25 @@
+!pip install yfinance
+import yfinance as yf
+
+ticker = "DJI" # "RUT"
+
+df = yf.download
+    ticker,
+    start = "2016-01-01",
+    end = "2026-01-12",
+    interval = "1d",
+    auto_adjust = False, 
+    progress = False 
+)
+from google.colab import files
+
+if df.empty:
+    print("no data returned")
+else:
+    print("data points：", len(df))
+    print(df.head())
+
+    filename = "DJI_2016-2026.csv" 
+    df.to_csv(filename)
+    print(f"save as {filename}")
+    files.download("DJI_2016-2026.csv")
