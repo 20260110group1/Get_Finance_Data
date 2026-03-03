@@ -1,0 +1,6 @@
+feedparser
+newspaper4k
+textblob
+pymongo
+certifi
+streamlit
