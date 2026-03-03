@@ -1,3 +1,4 @@
+# for_news
 feedparser
 newspaper4k
 textblob
