@@ -74,7 +74,7 @@ else:
                 c3.markdown(f"**抓取時間：** {fetch_time}")
                 
                 # 文章摘要
-                with st.expander("📖 查看新聞內容摘要"):
+                with st.expander("查看新聞內容摘要"):
                     st.write(news.get('content', '暫無內文'))
             
             st.divider() # 每一則新聞後的分隔線
