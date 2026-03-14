@@ -7,10 +7,8 @@ import time
 import os
 import certifi
 
-# 1. 從環境變數讀取 URI
 MONGO_URI = os.getenv("MONGO_URI")
 
-# 2. 初始化 MongoDB
 client = pymongo.MongoClient(MONGO_URI, tlsCAFile=certifi.where())
 db = client.finance_robot
 collection = db.articles
@@ -29,7 +27,7 @@ def get_sentiment(text):
     return score, intensity
 
 def calculate_importance(content, sentiment_score):
-    keywords = ['fed', 'nvidia', 'inflation', 'rate cut', 'earnings', 'nasdaq']
+    keywords = ['fed','surge','rally','ATH','outperform','plunge','plummet','sell-out','slide','dip','guidance','bullish','bearish','blue-chip','ipo','hawkish','dovish','fomc','YTD','YoY','QoQ','inflation','rate cut','earnings','nasdaq','s&p 500','DJIA','QQQ','apple','meta','google','nvidia']
     hit_count = sum(1 for word in keywords if word in content.lower())
     kw_score = min(hit_count / 3, 1.0)
     len_score = min(len(content) / 800, 1.0)
@@ -37,8 +35,6 @@ def calculate_importance(content, sentiment_score):
     return round(total_score, 3)
 
 def main():
-    print(f"--- 任務啟動：{datetime.now()} ---")
-    
     for name, url in RSS_FEEDS.items():
         print(f"正在掃描 {name}...")
         feed = feedparser.parse(url)
@@ -72,7 +68,7 @@ def main():
                     "created_at": datetime.now()
                 }
 
-                collection.insert_one(news_obj)
+                collection.insert_one(news_data)
                 print(f"成功新增: [{final_score}] {title[:30]}...")
                 time.sleep(1) 
 
