@@ -5,7 +5,6 @@ from datetime import datetime, timedelta
 
 st.set_page_config(
     page_title=" 美股新聞精選 ", 
-    page_icon="💰", 
     layout="wide"
 )
 
@@ -77,4 +76,4 @@ else:
                 with st.expander("查看新聞內容摘要"):
                     st.write(news.get('content', '暫無內文'))
             
-            st.divider() # 每一則新聞後的分隔線
+            st.divider()
