@@ -1,0 +1,19 @@
+pip install pandas pandas_datareader # 用fred抓取數據較正確
+import pandas_datareader.data as web
+import pandas as pd
+from datetime import datetime
+
+start = datetime(2005, 1, 1)
+end = datetime(2026, 12, 31)
+
+try:
+    df = web.DataReader('GDPC1', 'fred', start, end) # 'GDPC1' 是美國實際GDP的代碼(Real GDP)
+    df.columns = ['US_GDP_Billions_Dollars']
+    df['US_GDP_Trillions'] = df['US_GDP_Billions_Dollars'] / 1000
+    df.to_csv('US_GDP_2005_2026.csv')
+    
+    print("success, save as US_GDP_2005_2026.csv")
+    print(df.tail())
+
+except Exception as e:
+    print(f"FAILED，error message: {e}")
