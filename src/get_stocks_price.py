@@ -1,39 +1,41 @@
 import time
-from importlib.metadata import files
 import yfinance as yf
-from curl_cffi import requests
 import pandas as pd
-
-symbol_csv = "us_stock_symbol.csv"
-output_prefix ="us_stock_pricing_part"
-batch_100_sleep_time = 5
-batch_1000_sleep_time = 30
+from curl_cffi import requests
 
 session = requests.Session(impersonate="chrome")
 
-symbol_df = pd.read_csv(symbol_csv)
-symbols =  symbol_df["stock_symbol"].unique().tolist()
-print(f"Total symbols: {len(symbols)}")
-
-data_list = []
-file_index = 1
-
-for i,stock_symbol in enumerate(symbols,start=1):
+def fetch_single_stock(stock_symbol, period="10y"):
+    #【函式 1】專門負責抓取單一標的，適合 Streamlit 即時顯示
     try:
-        ticker = yf.Ticker(stock_symbol,session=session)
-        df = ticker.history(period="10y")
+        ticker = yf.Ticker(stock_symbol, session=session)
+        df = ticker.history(period=period)
 
         if df.empty:
-            print(f"{stock_symbol} is empty")
-            continue
+            return None
 
         df = df.reset_index()
         df["symbol"] = stock_symbol
-        df["Date"] = pd.to_datetime(df["Date"], utc=True)
-        df["Date"] = df["Date"].dt.date
+        df["Date"] = pd.to_datetime(df["Date"], utc=True).dt.date
         df = df[["symbol", "Date", "Open", "High", "Low", "Close", "Volume"]]
-        data_list.append(df)
-        print(f"{i} {stock_symbol} OK")
+        return df
+    except Exception as e:
+        print(f"Error fetching {stock_symbol}: {e}")
+        return None
+
+def batch_update_stocks(symbol_csv, output_prefix="us_stock_pricing_part"):
+    #【函式 2】就是你原本的批次邏輯，適合放在背景跑更新
+    symbol_df = pd.read_csv(symbol_csv)
+    symbols = symbol_df["stock_symbol"].unique().tolist()
+    
+    data_list = []
+    file_index = 1
+    
+    for i, stock_symbol in enumerate(symbols, start=1):
+        df = fetch_single_stock(stock_symbol) # 呼叫上面的函式 1
+        if df is not None:
+            data_list.append(df)
+            print(f"{i} {stock_symbol} OK")
 
     except Exception as e:
         print(f"{i} {stock_symbol} ERROR:{e}")
