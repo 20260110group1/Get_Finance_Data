@@ -1,3 +1,4 @@
+# 時間係用UTC 時間（比台灣慢 8 小時）
 import streamlit as st
 import pymongo
 import certifi
