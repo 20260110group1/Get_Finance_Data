@@ -9,7 +9,7 @@ app = FastAPI()
 
 # --- 1. 建立 MySQL 連線 (建議使用連線池 pool_size) ---
 # *************************************提醒：正式環境請將密碼移至 .env 檔案**********************************************
-DATABASE_URL = "mysql+pymysql://root:你的密碼@localhost/macro_monitor"
+DATABASE_URL = "mysql+pymysql://root:yarrow1016@localhost/macro_monitor_1"
 engine = create_engine(
     DATABASE_URL, 
     pool_size=10, 
