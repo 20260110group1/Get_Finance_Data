@@ -5,3 +5,6 @@ requests
 pandas
 yfinance
 curl_cffi
+plotly
+sqlalchemy
+pymysql
