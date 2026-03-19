@@ -1,0 +1,20 @@
+USE macro_monitor_1;
+
+CREATE TABLE economic_score (
+    symbol VARCHAR(20) NOT NULL,
+    score_date DATE NOT NULL,
+    open DOUBLE,
+    high DOUBLE,
+    low DOUBLE,
+    close DOUBLE,
+    adj_close DOUBLE,
+    volume BIGINT,
+    total_score DOUBLE,
+    signal_light VARCHAR(20),
+    PRIMARY KEY (symbol, score_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+SELECT * FROM macro_monitor_1.economic_score 
+ORDER BY score_date DESC 
+LIMIT 1000;
+SELECT MIN(score_date) AS start_date, MAX(score_date) AS end_date FROM economic_score;
