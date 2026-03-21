@@ -7,3 +7,6 @@ yfinance
 plotly
 sqlalchemy
 pymysql
+pymongo
+yfinance
+pandas
