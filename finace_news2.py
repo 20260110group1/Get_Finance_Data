@@ -37,7 +37,7 @@ def get_sentiment(text):
     return (polarity + 1) / 2  # 轉為 0~1 分數
 
 def calculate_importance(content, sentiment_score):
-    keywords = [['fed','surge','rally','ATH','outperform','plunge','plummet','sell-out','slide','dip','guidance','bullish','bearish','blue-chip','ipo','hawkish','dovish','fomc','YTD','YoY','QoQ','inflation','rate cut','earnings','nasdaq','s&p 500','DJIA','QQQ','apple','meta','google','nvidia']
+    keywords = ['fed','surge','rally','ATH','outperform','plunge','plummet','sell-out','slide','dip','guidance','bullish','bearish','blue-chip','ipo','hawkish','dovish','fomc','YTD','YoY','QoQ','inflation','rate cut','earnings','nasdaq','s&p 500','DJIA','QQQ','apple','meta','google','nvidia']
     hit_count = sum(1 for word in keywords if word in content.lower())
     kw_score = min(hit_count / 3, 1.0)
     total_score = (0.4 * sentiment_score) + (0.4 * kw_score) + (0.2 * min(len(content)/800, 1.0))
