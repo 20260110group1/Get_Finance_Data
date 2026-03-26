@@ -9,7 +9,7 @@ import requests
 load_dotenv()
 
 # 讀取 API URL 與資料庫設定
-API_BASE = "http://8.229.26.9:8000"
+API_BASE = "http://8.229.139.101:8000"
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 DB_HOST = os.getenv("DB_HOST")
